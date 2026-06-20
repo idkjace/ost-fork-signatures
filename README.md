@@ -1,59 +1,50 @@
 # OST Fork Signatures
 
-Auto-maintained byte signatures + RVAs for the **OpenSteamTool fork-only**
-`steamclient64.dll` functions — the ones powering the in-client build/version
-switch feature that aren't tracked by the upstream `steam-monitor` project.
+Distribution endpoint for the **OpenSteamTool fork-only** `steamclient64.dll`
+signatures — the functions powering the in-client build/version switch that
+aren't tracked by the upstream `steam-monitor` project.
 
-A GitHub Action runs daily: it pulls the latest `steamclient64.dll` via
-SteamCMD, resolves each fork function with [`fork_pattern_dumper.py`](fork_pattern_dumper.py),
-and commits a new TOML keyed by the DLL's SHA-256. OpenSteamTool's
-`PatternLoader` fetches these at runtime, so a Steam client update no longer
-requires re-shipping the tool.
+This repo is a **pure receiver**. It does not generate anything itself. The
+private `ost-steam-monitor` repo reverse-engineers and extracts the signatures,
+then pushes the fork-only subset here (to the `pattern` branch) on every Steam
+client update. OpenSteamTool's `PatternLoader` downloads from that branch at
+runtime — a public URL, so end users need no authentication.
+
+## Data flow
+
+```
+Valve SteamCMD ─► ost-steam-monitor CI (private, producer)
+                        │  extract full patterns
+                        │  export fork-only subset (renamed)
+                        ▼  push via deploy key
+                  ost-fork-signatures @ pattern  (this repo, public)
+                        │
+                        ▼  raw.githubusercontent / jsDelivr
+                  OpenSteamTool PatternLoader::LoadFork
+```
 
 ## Layout
 
 ```
-steamclient/<sha256>.toml      # per-build patterns (immutable, keyed by DLL hash)
-steamclient_ida_sigs.json      # gold-standard IDA signatures (resolver input)
-fork_pattern_dumper.py         # resolver: sig -> unique .text match -> RVA -> TOML
+steamclient/<sha256>.toml   # fork patterns, keyed by steamclient64.dll SHA-256
 ```
+
+The `pattern` branch is what the tool reads; `main` is just this README.
 
 ## TOML format
 
 Consumed verbatim by OpenSteamTool's `PatternLoader`. Each entry is keyed by
-the FNV-1a (32-bit) hash of the function name:
+the FNV-1a (32-bit) hash of the OpenSteamTool hook name:
 
 ```toml
-[0x82428E37]
+[0x3E4D0FE7]
 name = "GetAppBuildID"
 rva  = "0x4B0090"
 sig  = "89 54 24 ?? 48 89 4C 24 ?? 55 56 57 ..."
 ```
 
-## Tracked functions
+## Editing signatures
 
-| Function | Purpose |
-| --- | --- |
-| `BIsAppUpToDate` | Play-vs-Update button decision |
-| `GetActiveBeta` / `SetActiveBeta` | active branch dot + selection marshaller |
-| `GetNumBetas` / `GetBetaInfo` | build-history rows in the panel |
-| `GetAppConfigBranchesKV` | injects the branch list the panel renders |
-| `GetAppBuildID` | target-build resolver (planner reads this) |
-| `GetAppInfoNode` / `GetAppInfoSection` / `KeyValues_FindKeyPath` | appinfo-cache injection |
-| `ModifyStateFlags` | forces `UpdateRequired` so the rollback download plans |
-
-## Regenerating signatures
-
-When Valve reshapes a function and the daily run reports `MISS`, re-mint that
-function's signature in IDA Pro (`make_signature_for_function`, wildcard
-operands) and update `steamclient_ida_sigs.json`.
-
-## Latest builds
-
-<!--TABLE-->
-
-| Steam build | steamclient64.dll SHA-256 | Updated (UTC) |
-| --- | --- | --- |
-| `1781219792` | `4e20ea4d442d1ac1cacb95bdf3ea7e2b12212dea99f970e66d71018b5c2ffa4c` | 2026-06-20 10:54:18 UTC |
-| `1780352834` | `38b75e0d99ce8a42165bf34c6dbb6efbe17071b17be2416d11c80538c50bd3ce` | 2026-06-20 05:48:13 UTC |
-<!--/TABLE-->
+Do **not** edit signatures here — they are overwritten on the next publish.
+The source of truth is `ost-steam-monitor` (`steamclient_ida_sigs.json` +
+`STEAMCLIENT_FUNCTIONS`, exported via `export_fork_patterns.py`).
