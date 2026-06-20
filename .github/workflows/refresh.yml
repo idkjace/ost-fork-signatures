@@ -55,7 +55,10 @@ jobs:
         run: |
           # SteamCMD self-updates and frequently exits non-zero even on success;
           # don't let that fail the step — validate the DLL instead.
-          & "$env:STEAMCMD_DIR\steamcmd.exe" +login anonymous +quit
+          # Capture stdout so we can parse the real client build from its banner:
+          #   "Steam Console Client (c) Valve Corporation - version 1781219792"
+          & "$env:STEAMCMD_DIR\steamcmd.exe" +login anonymous +quit *>&1 |
+            Tee-Object -FilePath "$env:STEAMCMD_DIR\steamcmd_out.txt"
           $global:LASTEXITCODE = 0
           $sc = Join-Path $env:STEAMCMD_DIR steamclient64.dll
           if (-not (Test-Path $sc)) {
@@ -69,20 +72,13 @@ jobs:
         shell: pwsh
         run: |
           $version = "unknown"
-          # The client version manifest may live at a couple of paths depending
-          # on the SteamCMD layout — search for any *.manifest and scan it.
-          $manifest = Get-ChildItem -Path $env:STEAMCMD_DIR -Recurse -Filter '*steam_client*win*.manifest' -ErrorAction SilentlyContinue |
-                      Select-Object -First 1
-          if ($manifest) {
-            $txt = Get-Content $manifest.FullName -Raw
-            if ($txt -match '"version"\s*"(\d+)"') { $version = $Matches[1] }
+          # Real Steam client build comes from the SteamCMD banner line.
+          $out = Join-Path $env:STEAMCMD_DIR steamcmd_out.txt
+          if (Test-Path $out) {
+            $txt = Get-Content $out -Raw
+            if ($txt -match 'version\s+(\d{6,})') { $version = $Matches[1] }
           }
           $sc = Join-Path $env:STEAMCMD_DIR steamclient64.dll
-          if ($version -eq "unknown") {
-            # Fall back to the DLL's own file version (always present).
-            $fv = (Get-Item $sc).VersionInfo.FileVersion
-            if ($fv) { $version = $fv }
-          }
           $sha = (Get-FileHash $sc -Algorithm SHA256).Hash.ToLower()
           "version=$version"  | Out-File -Append $env:GITHUB_OUTPUT
           "sc_sha256=$sha"    | Out-File -Append $env:GITHUB_OUTPUT
