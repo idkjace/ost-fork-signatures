@@ -38,8 +38,8 @@ name = "GetNumBetas"
 rva = "0x4B4440"
 sig = "89 54 24 ?? 53 48 83 EC 60 48 89 74 24"
 
-[0x60C2E1EC]
-name = "KeyValues_FindKeyPath"
+[0xF076FDF5]
+name = "KVFindKeyPath"
 rva = "0xCFA7F0"
 sig = "48 8B C4 57 48 81 EC 50 04 00 00"
 
