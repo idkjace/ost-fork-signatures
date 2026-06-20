@@ -68,13 +68,21 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          $manifest = Join-Path $env:STEAMCMD_DIR "package\steam_client_win64.manifest"
           $version = "unknown"
-          if (Test-Path $manifest) {
-            $txt = Get-Content $manifest -Raw
+          # The client version manifest may live at a couple of paths depending
+          # on the SteamCMD layout — search for any *.manifest and scan it.
+          $manifest = Get-ChildItem -Path $env:STEAMCMD_DIR -Recurse -Filter '*steam_client*win*.manifest' -ErrorAction SilentlyContinue |
+                      Select-Object -First 1
+          if ($manifest) {
+            $txt = Get-Content $manifest.FullName -Raw
             if ($txt -match '"version"\s*"(\d+)"') { $version = $Matches[1] }
           }
           $sc = Join-Path $env:STEAMCMD_DIR steamclient64.dll
+          if ($version -eq "unknown") {
+            # Fall back to the DLL's own file version (always present).
+            $fv = (Get-Item $sc).VersionInfo.FileVersion
+            if ($fv) { $version = $fv }
+          }
           $sha = (Get-FileHash $sc -Algorithm SHA256).Hash.ToLower()
           "version=$version"  | Out-File -Append $env:GITHUB_OUTPUT
           "sc_sha256=$sha"    | Out-File -Append $env:GITHUB_OUTPUT
