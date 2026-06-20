@@ -53,12 +53,16 @@ jobs:
       - name: Fetch latest steamclient64.dll
         shell: pwsh
         run: |
+          # SteamCMD self-updates and frequently exits non-zero even on success;
+          # don't let that fail the step — validate the DLL instead.
           & "$env:STEAMCMD_DIR\steamcmd.exe" +login anonymous +quit
+          $global:LASTEXITCODE = 0
           $sc = Join-Path $env:STEAMCMD_DIR steamclient64.dll
           if (-not (Test-Path $sc)) {
             throw "steamclient64.dll missing after SteamCMD bootstrap"
           }
           Write-Host "::notice::steamclient64.dll = $((Get-Item $sc).Length) bytes"
+          exit 0
 
       - name: Capture build metadata
         id: version
