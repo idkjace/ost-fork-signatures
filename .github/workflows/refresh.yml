@@ -45,7 +45,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path "$env:STEAMCMD_DIR" | Out-Null
           $zip = Join-Path $env:STEAMCMD_DIR steamcmd.zip
           Invoke-WebRequest `
-            -Uri https://media.steampowered.com/installer/steamcmd/steamcmd.zip `
+            -Uri https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip `
             -OutFile $zip
           Expand-Archive -Path $zip -DestinationPath $env:STEAMCMD_DIR -Force
           Remove-Item $zip
