@@ -54,6 +54,6 @@ operands) and update `steamclient_ida_sigs.json`.
 
 | Steam build | steamclient64.dll SHA-256 | Updated (UTC) |
 | --- | --- | --- |
-| `unknown` | `4e20ea4d442d1ac1cacb95bdf3ea7e2b12212dea99f970e66d71018b5c2ffa4c` | 2026-06-20 10:39:46 UTC |
+| `10.73.11.11` | `4e20ea4d442d1ac1cacb95bdf3ea7e2b12212dea99f970e66d71018b5c2ffa4c` | 2026-06-20 10:46:38 UTC |
 | `1780352834` | `38b75e0d99ce8a42165bf34c6dbb6efbe17071b17be2416d11c80538c50bd3ce` | 2026-06-20 05:48:13 UTC |
 <!--/TABLE-->
