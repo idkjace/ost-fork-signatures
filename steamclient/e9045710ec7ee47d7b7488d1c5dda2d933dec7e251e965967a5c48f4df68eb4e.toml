@@ -41,7 +41,7 @@ sig = "89 54 24 ?? 53 48 83 EC 60 48 89 74 24"
 [0xF076FDF5]
 name = "KVFindKeyPath"
 rva = "0xD27910"
-sig = "48 8B C4 4C 89 48 20 57"
+sig = "48 8B C4 4C 89 48 20 57 48 81 EC 60 04 00 00 48 89 70 E8 48 8B FA 4C 89 60 E0 48 8B F1"
 
 [0xFF1E8567]
 name = "ModifyStateFlags"
