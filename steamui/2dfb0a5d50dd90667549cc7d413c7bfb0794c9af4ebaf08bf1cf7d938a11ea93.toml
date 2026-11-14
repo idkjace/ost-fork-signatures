@@ -1,3 +1,13 @@
+[0xE22F74B4]
+name = "BuildCompleteAppOverviewChange"
+rva = "0x634280"
+sig = "4C 89 44 24 ?? 48 89 54 24 ?? 48 89 4C 24 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ?? 48 81 EC ?? ?? ?? ?? 4C 8B FA"
+
+[0xB030A061]
+name = "FillInAppOverview"
+rva = "0x63B0D0"
+sig = "48 89 54 24 ?? 48 89 4C 24 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ?? 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ??"
+
 [0x971A3D24]
 name = "OtherSessionPlayingLaunch"
 rva = "0x55D94A"
