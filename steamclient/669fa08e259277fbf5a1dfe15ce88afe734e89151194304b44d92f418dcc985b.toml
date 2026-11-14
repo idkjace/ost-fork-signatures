@@ -1,0 +1,74 @@
+[0x0C8228AE]
+name = "ApplyFamilyRunningApps"
+rva = "0xA21D10"
+sig = "48 8B C4 48 89 50 ?? 48 89 48 ?? 55 48 8D 68 ?? 48 81 EC ?? ?? ?? ?? 48 89 58 ?? 48 8B DA"
+
+[0x57A861D4]
+name = "BIsAppUpToDate"
+rva = "0x758A00"
+sig = "40 53 56 57 48 83 EC ?? 8B DA 48 8B F9 BA 40 00 00 00 48 8D 4C 24 ?? 45 33 C9 41 B8 20 00 00 00 E8 ?? ?? ?? ?? B2 01 48 8D 4C 24 ?? E8 ?? ?? ?? ?? B2 11 48 8D 4C 24 ?? E8 ?? ?? ?? ?? 8B 47 ?? 48 8D 94 24 ?? ?? ?? ?? 41 B8 04 00 00 00 89 84 24 ?? ?? ?? ?? 48 8D 4C 24 ?? E8 ?? ?? ?? ?? 41 B8 04 00 00 00 C7 84 24 ?? ?? ?? ?? 07 B4 16 50"
+
+[0x5F1C8A7B]
+name = "GetActiveBeta"
+rva = "0x4F0470"
+sig = "48 89 5C 24 ?? 55 56 57 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 49 8B F8"
+
+[0x3E4D0FE7]
+name = "GetAppBuildID"
+rva = "0x4F0850"
+sig = "89 54 24 ?? 48 89 4C 24 ?? 55 56 57 41 54 41 55 41 56 41 57 48 8B EC 48 83 EC ??"
+
+[0x6AAC4AA5]
+name = "GetAppConfigBranchesKV"
+rva = "0x4F5DD0"
+sig = "4C 89 4C 24 ?? 48 89 4C 24 ?? 55 53 56 57 41 57"
+
+[0x1A603E86]
+name = "GetAppInfoNode"
+rva = "0x4DDA10"
+sig = "44 8B 41 ?? 44 8B CA 41 83 F8 FF 74 ?? 4C 8B 59 ?? 0F 1F 40 ?? 66 66 66 0F 1F 84 00 ?? ?? 00 00 49 63 C0 48 C1 E0 05 4A 8D 14 18 46 3B 4C 18 ?? 73 ?? 41 83 F8 FF 48 8D 41 ?? 48 0F 45 C2 44 8B 00 EB ?? 76 ?? 41 83 F8 FF 48 8D 41 ?? 48 0F 45 C2 44 8B 40 ?? 41 83 F8 FF 75 ?? 33 C0 C3 41 83 F8 FF 74 ?? 48 8B 52 ??"
+
+[0xD10B7B25]
+name = "GetAppInfoSection"
+rva = "0x4DFD40"
+sig = "48 83 EC ?? 8D 42 ?? 83 F8 12"
+
+[0x81077C5D]
+name = "GetBetaInfo"
+rva = "0x4F2E90"
+sig = "48 8B C4 48 89 48 ?? 55 53 57 48 8D 68 ?? 48 81 EC ?? ?? ?? ?? 4C 89 60 ??"
+
+[0x1BF4FB5C]
+name = "GetNumBetas"
+rva = "0x4F4C40"
+sig = "89 54 24 ?? 53 48 83 EC ?? 48 89 74 24 ??"
+
+[0x1A3D842A]
+name = "GetSharedAppLockInfo"
+rva = "0xA0B970"
+sig = "4C 89 44 24 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8B EC 48 83 EC ?? 45 33 E4"
+
+[0xF076FDF5]
+name = "KVFindKeyPath"
+rva = "0xD9EBF0"
+sig = "48 8B C4 4C 89 48 ?? 57"
+
+[0x059B8299]
+name = "KickOtherPlayingSession"
+rva = "0x9FD050"
+sig = "40 53 48 83 EC ?? 83 B9 ?? ?? ?? ?? 04 48 8B D9 74 ??"
+
+[0xFF1E8567]
+name = "ModifyStateFlags"
+rva = "0x534180"
+sig = "40 53 55 57 41 56 48 81 EC ?? ?? ?? ?? 44 8B 71 ??"
+
+[0xD180A695]
+name = "RebuildDepotConfigs"
+rva = "0x52D150"
+sig = "48 8B C4 55 41 56 48 81 EC ?? ?? ?? ??"
+
+[0xAB94786F]
+name = "SetActiveBeta"
+rva = "0x890060"
+sig = "40 53 56 57 48 83 EC ?? 49 8B F8 8B DA 48 8B F1 BA 40 00 00 00 41 B8 20 00 00 00 48 8D 4C 24 ?? 45 33 C9 E8 ?? ?? ?? ?? B2 01 48 8D 4C 24 ?? E8 ?? ?? ?? ?? B2 11 48 8D 4C 24 ?? E8 ?? ?? ?? ?? 8B 46 ?? 48 8D 94 24 ?? ?? ?? ?? 41 B8 04 00 00 00 89 84 24 ?? ?? ?? ?? 48 8D 4C 24 ?? E8 ?? ?? ?? ?? 41 B8 04 00 00 00 C7 84 24 ?? ?? ?? ?? CF 20 0B 4D"
